@@ -1,0 +1,19 @@
+
+- One-project website/page
+    - Website
+        - One "page": THE page
+    - Page
+        - Project presentation
+        - Donation rewards description
+        - Funding status
+        - Bakers list
+
+- Multi-projects website
+    - User registration
+    - Project creation
+    - Administration
+
+- Languages covered
+    - PHP
+    - Python
+    - Node.js?
