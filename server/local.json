@@ -13,7 +13,10 @@
             "title": "Krowdf",
             "address": "paypal@example.com",
             "currency": "EUR",
-            "receiver": "paypal@example.com"
+            "receiver": "paypal@example.com",
+            "notify_url": "<%= root_url %>/paypal_ipn",
+            "return_url": "<%= root_url %>",
+            "cancel_url": "<%= root_url %>"
         },
         "amount_needed": 250
     }

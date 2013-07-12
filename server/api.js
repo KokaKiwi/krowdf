@@ -1,8 +1,12 @@
+var qs = require('querystring');
+
 var nconf = require('nconf'),
-    _ = require('underscore');
+    _ = require('underscore'),
+    debug = require('debug');
 
 var models = require('./models'),
-    utils = require('./utils');
+    utils = require('./utils'),
+    paypal = require('./paypal');
 
 var api = module.exports = {};
 
@@ -18,7 +22,7 @@ var getData = api.getData = function(cb) {
     var Baker = models.Baker;
     Baker.find({validated: 1}, function(err, bakers) {
         if (err) {
-            console.log(err);
+            debug('db')(err);
             data.err = err;
         } else {
             _.each(bakers, function(baker) {
@@ -41,15 +45,17 @@ var pledge = api.pledge = function(infos, cb) {
 
     baker.save(function(err) {
         if (err) {
-            cb(err, null);
+            debug('db')(err);
+            cb(null);
         } else {
             var result = {
-                validateUrl: utils.route_url('/validate/:secret', {
+                // url: paypal.makeUrl(baker)
+                url: utils.route_url('/validate/:secret', {
                     secret: baker.secret
                 })
             };
 
-            cb(null, result);
+            cb(result);
         }
     });
 };

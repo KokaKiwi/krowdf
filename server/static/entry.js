@@ -4,43 +4,48 @@ var scope, socket;
 function reloadPage() {
     if (scope && socket) {
         socket.emit('getData', function(data) {
-            console.log(data);
-            scope.krowdf = data;
+            // console.log(data);
+            scope.krowdf.data = data;
             scope.$apply();
         });
     }
     setTimeout(reloadPage, 7500);
 }
 
+function pledge() {
+    var infos = {
+        name: scope.name,
+        email: scope.email,
+        amount: scope.amount
+    };
+
+    socket.emit('pledge', infos, function(res) {
+        scope.krowdf.paypalURL = res.url;
+
+        scope.name = "";
+        scope.email = "";
+        scope.$apply();
+    });
+}
+
 function initPage() {
     scope.krowdf = {
-        goal: {
-            current: 0,
-            total: 0
+        data: {
+            goal: {
+                current: 0,
+                total: 0
+            },
+            bakers: []
         },
-        bakers: []
+        paypalURL: null
     };
+    scope.pledge = pledge;
 }
 
 function KrowdfCtrl($scope) {
     scope = $scope;
     initPage();
     reloadPage();
-}
-
-function pledge() {
-    var infos = {
-        name: scope.name,
-        email: scope.email
-    };
-
-    socket.emit('pledge', infos, function(err, res) {
-        console.log(err || res.validateUrl);
-
-        scope.name = "";
-        scope.email = "";
-        scope.$apply();
-    });
 }
 
 require([

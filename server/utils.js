@@ -1,11 +1,17 @@
 var qs = require('querystring');
 
-var nconf = require('nconf');
+var nconf = require('nconf'),
+    _ = require('underscore');
 
 var utils = module.exports = {};
 
-var route_url = utils.route_url = function(path, params) {
-    var url = nconf.get('server:root_url');
+var route_url = utils.route_url = function(path, params, options) {
+    options = options || {};
+    _.defaults(options, {
+        root_url: nconf.get('server:root_url')
+    });
+
+    var url = options.root_url;
     if (path) {
         url += path;
     }
@@ -18,7 +24,7 @@ var route_url = utils.route_url = function(path, params) {
             qparams[key] = params[key];
         }
     }
-    if (qparams && qparams.length > 0) {
+    if (!_.isEmpty(qparams)) {
         url += '?' + qs.stringify(qparams);
     }
 
