@@ -15,6 +15,13 @@ var random_str = models.random_str = function (length) {
     return str;
 }
 
+var default_str = models.default_str = function(obj, key) {
+    var str = obj[key];
+    if (!str || str.length == 0) {
+        delete obj[key];
+    }
+};
+
 models.define = function(db) {
 
     // Baker
@@ -49,12 +56,19 @@ models.define = function(db) {
             required: false,
             type: 'object'
         }
+    }, {
+        validate: function(amount) {
+            this.amount = amount;
+            this.validated = true;
+        }
     });
 
     Baker.createNew = function(properties) {
         _.defaults(properties, {
             secret: random_str(32)
         });
+        default_str(properties, 'name');
+        default_str(properties, 'email');
 
         return new Baker(properties);
     };

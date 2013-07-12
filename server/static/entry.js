@@ -15,8 +15,7 @@ function reloadPage() {
 function pledge() {
     var infos = {
         name: scope.name,
-        email: scope.email,
-        amount: scope.amount
+        email: scope.email
     };
 
     socket.emit('pledge', infos, function(res) {
@@ -40,6 +39,9 @@ function initPage() {
         paypalURL: null
     };
     scope.pledge = pledge;
+
+    scope.name = '';
+    scope.email = '';
 }
 
 function KrowdfCtrl($scope) {

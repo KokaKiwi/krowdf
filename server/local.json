@@ -5,7 +5,7 @@
     "server": {
         "host": "0.0.0.0",
         "port": 3000,
-        "root_url": "http://127.0.0.1:3000"
+        "root_url": "http://ROOT_URL"
     },
     "settings": {
         "paypal": {
@@ -18,6 +18,7 @@
             "return_url": "<%= root_url %>",
             "cancel_url": "<%= root_url %>"
         },
-        "amount_needed": 250
+        "amount_needed": 250,
+        "bakers_public_fields": ["name", "amount"]
     }
 }

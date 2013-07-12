@@ -14,6 +14,9 @@
     - Administration
 
 - Languages covered
-    - PHP
-    - Python
-    - Node.js?
+    - Node.js
+
+- Name
+    - krowdf?
+    - KrowdKapital?
+    - KiwiKrowd?

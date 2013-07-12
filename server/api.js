@@ -26,10 +26,7 @@ var getData = api.getData = function(cb) {
             data.err = err;
         } else {
             _.each(bakers, function(baker) {
-                data.bakers.push({
-                    name: baker.name,
-                    amount: baker.amount
-                });
+                data.bakers.push(_.pick(baker, nconf.get('settings:bakers_public_fields')));
 
                 data.goal.current += baker.amount;
             });
@@ -49,10 +46,8 @@ var pledge = api.pledge = function(infos, cb) {
             cb(null);
         } else {
             var result = {
-                // url: paypal.makeUrl(baker)
-                url: utils.route_url('/validate/:secret', {
-                    secret: baker.secret
-                })
+                url: paypal.makeUrl(baker),
+                secret: baker.secret
             };
 
             cb(result);

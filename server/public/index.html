@@ -39,9 +39,6 @@
                     <div class="control-group">
                         <input type="email" ng-model="email" ng-init="" class="login-field span3" value="" placeholder="Your email" />
                     </div>
-                    <div class="control-group">
-                        <input type="text" ng-model="amount" ng-init="" class="login-field span3" value="" placeholder="Amount" />
-                    </div>
                     <a class="btn btn-primary btn-large btn-block" ng-click="pledge()">Pledge</a>
                     <a class="btn btn-primary btn-large btn-block" href="{{ krowdf.paypalURL }}" ng-show="krowdf.paypalURL != null">Go to Paypal</a>
                 </div>
@@ -49,7 +46,7 @@
                     <h3>Bakers</h3>
                     <ul>
                         <li ng-repeat="baker in krowdf.data.bakers">
-                            {{ baker.name }}
+                            {{ baker.name }} - {{ baker.amount }}&euro;
                         </li>
                     </ul>
                 </div>
