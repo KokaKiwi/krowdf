@@ -16,19 +16,19 @@ var getData = api.getData = function(cb) {
             current: 0,
             total: nconf.get('settings:amount_needed')
         },
-        bakers: []
+        backers: []
     };
 
-    var Baker = models.Baker;
-    Baker.find({validated: 1}, function(err, bakers) {
+    var Backer = models.Backer;
+    Backer.find({validated: 1}, function(err, backers) {
         if (err) {
             debug('db')(err);
             data.err = err;
         } else {
-            _.each(bakers, function(baker) {
-                data.bakers.push(_.pick(baker, nconf.get('settings:bakers_public_fields')));
+            _.each(backers, function(backer) {
+                data.backers.push(_.pick(backer, nconf.get('settings:backers_public_fields')));
 
-                data.goal.current += baker.amount;
+                data.goal.current += backer.amount;
             });
         }
 
@@ -37,17 +37,17 @@ var getData = api.getData = function(cb) {
 };
 
 var pledge = api.pledge = function(infos, cb) {
-    var Baker = models.Baker;
-    var baker = Baker.createNew(infos);
+    var Backer = models.Backer;
+    var backer = Backer.createNew(infos);
 
-    baker.save(function(err) {
+    backer.save(function(err) {
         if (err) {
             debug('db')(err);
             cb(null);
         } else {
             var result = {
-                url: paypal.makeUrl(baker),
-                secret: baker.secret
+                url: paypal.makeUrl(backer),
+                secret: backer.secret
             };
 
             cb(result);

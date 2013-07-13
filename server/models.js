@@ -24,8 +24,8 @@ var default_str = models.default_str = function(obj, key) {
 
 models.define = function(db) {
 
-    // Baker
-    var Baker = models.Baker = db.define('baker', {
+    // Backer
+    var Backer = models.Backer = db.define('Backer', {
         name: {
             required: false,
             type: 'text',
@@ -63,13 +63,13 @@ models.define = function(db) {
         }
     });
 
-    Baker.createNew = function(properties) {
+    Backer.createNew = function(properties) {
         _.defaults(properties, {
             secret: random_str(32)
         });
         default_str(properties, 'name');
         default_str(properties, 'email');
 
-        return new Baker(properties);
+        return new Backer(properties);
     };
 };

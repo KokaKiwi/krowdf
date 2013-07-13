@@ -5,6 +5,7 @@ function reloadPage() {
     if (scope && socket) {
         socket.emit('getData', function(data) {
             // console.log(data);
+            data.goal.percent = Math.floor(data.goal.current / data.goal.total * 100);
             scope.krowdf.data = data;
             scope.$apply();
         });
@@ -32,9 +33,10 @@ function initPage() {
         data: {
             goal: {
                 current: 0,
-                total: 0
+                total: 0,
+                percent: 0
             },
-            bakers: []
+            backers: []
         },
         paypalURL: null
     };

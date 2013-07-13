@@ -13,19 +13,19 @@ routes.index = function(req, res) {
 routes.validate = function(req, res) {
     var secret = req.param('secret');
 
-    var Baker = models.Baker;
-    Baker.find({secret: secret}, function(err, bakers) {
+    var Backer = models.Backer;
+    Backer.find({secret: secret}, function(err, backers) {
         if (err) {
             debug('db')(err);
         }
 
-        var baker = _.first(bakers);
-        if (baker) {
-            baker.amount = baker.amount == 0 ? 10 : baker.amount;
-            baker.validated = true;
-            baker.payment = req.params;
+        var backer = _.first(backers);
+        if (backer) {
+            backer.amount = backer.amount == 0 ? 10 : backer.amount;
+            backer.validated = true;
+            backer.payment = req.params;
 
-            baker.save(function(err) {
+            backer.save(function(err) {
                 if (err) {
                     console.log(err);
                 }
@@ -33,7 +33,7 @@ routes.validate = function(req, res) {
                 res.send('Done.');
             });
         } else {
-            res.send('No baker with secret: ' + secret);
+            res.send('No backer with secret: ' + secret);
         }
     });
 };
@@ -42,29 +42,29 @@ routes.paypal_ipn = function(req, res) {
     var secret = req.param('secret');
 
     if (secret) {
-        var Baker = models.Baker;
-        Baker.find({secret: secret}, function(err, bakers) {
+        var Backer = models.Backer;
+        Backer.find({secret: secret}, function(err, backers) {
             if (err) {
                 debug('db')(err);
             }
 
-            var baker = _.first(bakers);
-            if (baker) {
+            var backer = _.first(backers);
+            if (backer) {
                 ipn.verify(req.body, function(err, msg) {
                     if (err) {
                         debug('paypal')(err);
                         res.send(500, 'Error.');
                     } else {
                         if (req.param('payment_status') == 'Completed') {
-                            baker.payment = req.body;
-                            baker.validated = true;
-                            baker.amount = parseFloat(req.param('mc_gross'));
-                            baker.save(function(err) {
+                            backer.payment = req.body;
+                            backer.validated = true;
+                            backer.amount = parseFloat(req.param('mc_gross'));
+                            backer.save(function(err) {
                                 if (err) {
                                     debug('db')(err);
                                     res.send(500, 'Error.');
                                 } else {
-                                    console.log('Baker ' + baker.name + ' validated.');
+                                    console.log('Backer ' + backer.name + ' validated.');
                                     res.send('Done.');
                                 }
                             })
@@ -72,7 +72,7 @@ routes.paypal_ipn = function(req, res) {
                     }
                 });
             } else {
-                res.send(404, 'No baker for secret: ' + secret);
+                res.send(404, 'No backer for secret: ' + secret);
             }
         });
     } else {

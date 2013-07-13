@@ -7,6 +7,8 @@
 
         <!-- Loading Bootstrap -->
         <link href="/bootstrap/css/bootstrap.css" rel="stylesheet">
+        <script src="/js/jquery-1.8.3.min.js"></script>
+        <script src="/js/bootstrap.min.js"></script>
         <!-- Loading Flat UI -->
         <link href="css/flat-ui.css" rel="stylesheet">
 
@@ -19,16 +21,27 @@
 
         <!-- Loading Krowdf main script -->
         <script data-main="entry" src="/require.min.js"></script>
+
+        <!-- Loading some custom code -->
+        <script>
+            $(document).ready(function() {
+                $('#pledge-btn').tooltip({
+                    title: 'Sandbox Paypal!',
+                    placement: 'bottom'
+                });
+            });
+        </script>
     </head>
     <body ng-controller="KrowdfCtrl">
         <div class="container">
-            <h1>Krowdf</h1>
+            <h1>Krowdf <a class="btn btn-large" target="_blank" href="https://github.com/KokaKiwi/krowdf">Git</a></h1>
             <div class="row">
                 <div class="span3">
                     <h3>Goal</h3>
                     <div>
                         {{ krowdf.data.goal.current }}&euro;
-                        / {{ krowdf.data.goal.total }}&euro;
+                        / {{ krowdf.data.goal.total }}&euro;<br />
+                        {{ krowdf.data.goal.percent }}%
                     </div>
                 </div>
                 <div class="span3">
@@ -40,13 +53,13 @@
                         <input type="email" ng-model="email" ng-init="" class="login-field span3" value="" placeholder="Your email" />
                     </div>
                     <a class="btn btn-primary btn-large btn-block" ng-click="pledge()">Pledge</a>
-                    <a class="btn btn-primary btn-large btn-block" href="{{ krowdf.paypalURL }}" ng-show="krowdf.paypalURL != null">Go to Paypal</a>
+                    <a class="btn btn-primary btn-large btn-block" id="pledge-btn" href="{{ krowdf.paypalURL }}" target="_blank" ng-show="krowdf.paypalURL != null">Go to Paypal</a>
                 </div>
                 <div class="span3">
-                    <h3>Bakers</h3>
+                    <h3>Backers</h3>
                     <ul>
-                        <li ng-repeat="baker in krowdf.data.bakers">
-                            {{ baker.name }} - {{ baker.amount }}&euro;
+                        <li ng-repeat="backer in krowdf.data.backers">
+                            {{ backer.name }} - {{ backer.amount }}&euro;
                         </li>
                     </ul>
                 </div>
