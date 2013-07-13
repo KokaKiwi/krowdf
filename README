@@ -1,0 +1,19 @@
+How to set up
+=============
+
+You need Node.js in order to run krowdf server.
+
+- Launch your terminal and go into 'server' sub-directory
+- Run the command: npm install
+- Modify local.json for your needs
+- Run the command: node main
+
+Design
+======
+
+If you want to use your own design for server website, just modify index.html as you need.
+The internal main js file use Angular.js in order to display data, and Socket.io for getting datas from the server.
+
+Read the Angular.js doc and the example index.html in order to create your own design easily.
+
+PS: Just don't forget the <script data-main="entry" src="/require.min.js"></script> in your page.
