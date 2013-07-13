@@ -19,6 +19,6 @@
             "cancel_url": "<%= root_url %>"
         },
         "amount_needed": 250,
-        "bakers_public_fields": ["name", "amount"]
+        "backers_public_fields": ["name", "amount"]
     }
 }

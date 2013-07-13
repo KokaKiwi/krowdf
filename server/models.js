@@ -25,7 +25,7 @@ var default_str = models.default_str = function(obj, key) {
 models.define = function(db) {
 
     // Backer
-    var Backer = models.Backer = db.define('Backer', {
+    var Backer = models.Backer = db.define('backer', {
         name: {
             required: false,
             type: 'text',
